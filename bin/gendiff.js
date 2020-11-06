@@ -5,6 +5,9 @@ const { Command } = pkg;
 const program = new Command();
 
 program
+  .version('0.0.1')
+  .arguments('<cmd> [env]')
+  .description('Compares two configuration files and shows a difference')
   .option('-f, --foo', 'enable some foo');
 
 // must be before .parse()
