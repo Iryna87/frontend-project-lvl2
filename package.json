@@ -10,10 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/Iryna87/frontend-project-lvl2.git"
   },
+  "type": "module",
   "author": "Iryna Morozova",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Iryna87/frontend-project-lvl2/issues"
   },
-  "homepage": "https://github.com/Iryna87/frontend-project-lvl2#readme"
+  "homepage": "https://github.com/Iryna87/frontend-project-lvl2#readme",
+  "devDependencies": {
+    "commander": "^6.2.0"
+  }
 }
