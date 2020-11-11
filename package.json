@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "My second front-end project.",
   "bin": {
-    "gendiff": "bin/gendiff.js"
+    "gendiff": "src/bin/gendiff.js"
   },
   "scripts": {
     "test": "npx -n --experimental-vm-modules jest"

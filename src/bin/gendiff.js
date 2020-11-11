@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-/* eslint-disable import/no-extraneous-dependencies */
 
 import pkg from 'commander';
-import genDiff from '../src/index.js';
+import genDiff from '../index.js';
 
 const { Command } = pkg;
 const program = new Command();
