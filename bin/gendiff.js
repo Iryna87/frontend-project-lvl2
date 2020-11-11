@@ -2,6 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
 import pkg from 'commander';
+import genDiff from '../src/index.js';
 
 const { Command } = pkg;
 const program = new Command();
@@ -10,7 +11,9 @@ program
   .version('0.0.1')
   .arguments('<cmd> [env]')
   .description('Compares two configuration files and shows a difference')
-  .option('-f, --format [type]', 'output format: json, plain, tree', 'tree');
+  .option('-f, --format [type]', 'output format: json, plain, tree', 'tree')
+  .action((firstConfig, secondConfig) => (
+    console.log(genDiff(firstConfig, secondConfig))));
 
 // must be before .parse()
 program.on('--help', () => {
