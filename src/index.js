@@ -27,5 +27,5 @@ export default (filename1, filename2) => {
       difference[` + ${key}`] = value;
     }
   }
-  return difference;
+  return JSON.stringify(difference);
 };
