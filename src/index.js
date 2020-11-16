@@ -10,21 +10,23 @@ export default (filename1, filename2) => {
   const arrFromFirstObj = Object.entries(objFromFirstJson);
   const arrFromSecondObj = Object.entries(objFromSecondJson);
   const difference = {};
+  // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of arrFromFirstObj) {
     if (!_.has(objFromSecondJson, key)) {
       difference[` - ${key}`] = value;
     } if (objFromFirstJson[key] !== objFromSecondJson[key]) {
-        difference[` - ${key}`] = value;
-      } else {
-        difference[`   ${key}`] = value;
-      }
+      difference[` - ${key}`] = value;
+    } else {
+      difference[`   ${key}`] = value;
+    }
   }
+  // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of arrFromSecondObj) {
-    if (!_.has(objFromFirstJson, key)) { 
+    if (!_.has(objFromFirstJson, key)) {
       difference[` + ${key}`] = value;
     } if (objFromFirstJson[key] !== objFromSecondJson[key]) {
-        difference[` + ${key}`] = value;
-      }
+      difference[` + ${key}`] = value;
+    }
   }
   return difference;
 };
