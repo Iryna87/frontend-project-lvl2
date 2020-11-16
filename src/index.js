@@ -13,22 +13,18 @@ export default (filename1, filename2) => {
   for (const [key, value] of arrFromFirstObj) {
     if (!_.has(objFromSecondJson, key)) {
       difference[` - ${key}`] = value;
-    } else {
-      if (objFromFirstJson[key] !== objFromSecondJson[key]) {
+    } if (objFromFirstJson[key] !== objFromSecondJson[key]) {
         difference[` - ${key}`] = value;
       } else {
         difference[`   ${key}`] = value;
       }
-    }
   }
   for (const [key, value] of arrFromSecondObj) {
     if (!_.has(objFromFirstJson, key)) { 
       difference[` + ${key}`] = value;
-    } else {
-        if (objFromFirstJson[key] !== objFromSecondJson[key]) {
-          difference[` + ${key}`] = value;
-        }
-    }
-  };  
+    } if (objFromFirstJson[key] !== objFromSecondJson[key]) {
+        difference[` + ${key}`] = value;
+      }
+  }
   return difference;
 };
