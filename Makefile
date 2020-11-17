@@ -4,7 +4,7 @@ install-deps:
 	npm ci
 
 test:
-	npm test
+	npx -n --experimental-vm-modules jest --watch      //npm test
 
 test-coverage:
 	npm test -- --coverage --coverageProvider=v8

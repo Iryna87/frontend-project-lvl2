@@ -1,31 +1,30 @@
 import fs from 'fs';
 import path from 'path';
-import _ from 'lodash';
 
 export default (filename1, filename2) => {
   const before = fs.readFileSync(path.resolve(filename1), 'utf-8');
   const after = fs.readFileSync(path.resolve(filename2), 'utf-8');
   const objFromFirstJson = JSON.parse(before);
   const objFromSecondJson = JSON.parse(after);
-  const arrFromFirstObj = Object.entries(objFromFirstJson);
-  const arrFromSecondObj = Object.entries(objFromSecondJson);
+  const arrFromFirstObj = Object.keys(objFromFirstJson);
+  const arrFromSecondObj = Object.keys(objFromSecondJson);
   const difference = {};
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [key, value] of arrFromFirstObj) {
-    if (_.has(objFromSecondJson, key) && objFromFirstJson[key] !== objFromSecondJson[key]) {
-      difference[` - ${key}`] = value;
-      difference[` + ${key}`] = objFromSecondJson[key];
-    } if (!_.has(objFromSecondJson, key)) {
-      difference[` - ${key}`] = value;
-    } if (_.has(objFromSecondJson, key) && objFromFirstJson[key] === objFromSecondJson[key]) {
-      difference[`   ${key}`] = value;
+  arrFromFirstObj.map((i) => {
+    if (arrFromSecondObj.includes(i) && objFromFirstJson[i] !== objFromSecondJson[i]) {
+      difference[` - ${i}`] = objFromFirstJson[i];
+      difference[` + ${i}`] = objFromSecondJson[i];
+    } if (arrFromSecondObj.includes(i) && objFromFirstJson[i] === objFromSecondJson[i]) {
+      difference[`   ${i}`] = objFromSecondJson[i];
+    } if (!arrFromSecondObj.includes(i)) {
+      difference[` - ${i}`] = objFromFirstJson[i];
     }
-  }
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [key, value] of arrFromSecondObj) {
-    if (!_.has(objFromFirstJson, key)) {
-      difference[` + ${key}`] = value;
+    return difference;
+  });
+  arrFromSecondObj.map((i) => {
+    if (!arrFromFirstObj.includes(i)) {
+      difference[` + ${i}`] = objFromSecondJson[i];
     }
-  }
+    return difference;
+  });
   return JSON.stringify(difference);
 };
