@@ -4,15 +4,20 @@ import parse from './parsers.js';
 
 const makeFileData = (pathToFile) => {
   const content = fs.readFileSync(path.resolve(pathToFile), 'utf-8');
-  const format = path.extname(pathToFile);
+  const format = path.extname(pathToFile).slice(1);
   return { content, format };
 };
 
-const genDiff = (pathToFile1, pathToFile2) => {
+const getData = (pathToFile1, pathToFile2) => {
   const beforeConfig = makeFileData(pathToFile1);
   const afterConfig = makeFileData(pathToFile2);
-  const parseBefore = parse(beforeConfig.type, beforeConfig.data);
-  const parseAfter = parse(afterConfig.type, afterConfig.data);
+  const parseBefore = parse(beforeConfig.format, beforeConfig.content);
+  const parseAfter = parse(afterConfig.format, afterConfig.content);
+  return [parseBefore, parseAfter];
+};
+
+const genDiff = (pathToFile1, pathToFile2) => {
+  const [parseBefore, parseAfter] = getData(pathToFile1, pathToFile2);
   const arrFromFirstObj = Object.keys(parseBefore);
   const arrFromSecondObj = Object.keys(parseAfter);
   const difference = {};
