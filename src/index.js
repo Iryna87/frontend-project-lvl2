@@ -1,30 +1,39 @@
 import fs from 'fs';
 import path from 'path';
+import parse from './parsers.js';
 
-export default (filename1, filename2) => {
-  const before = fs.readFileSync(path.resolve(filename1), 'utf-8');
-  const after = fs.readFileSync(path.resolve(filename2), 'utf-8');
-  const objFromFirstJson = JSON.parse(before);
-  const objFromSecondJson = JSON.parse(after);
-  const arrFromFirstObj = Object.keys(objFromFirstJson);
-  const arrFromSecondObj = Object.keys(objFromSecondJson);
+const makeFileData = (pathToFile) => {
+  const data = fs.readFileSync(path.resolve(pathToFile), 'utf-8');
+  const type = path.extname(pathToFile);
+  return { data, type };
+};
+
+const genDiff = (pathToFile1, pathToFile2) => {
+  const beforeConfig = makeFileData(pathToFile1);
+  const afterConfig = makeFileData(pathToFile2);
+  const parseBefore = parse(beforeConfig.type, beforeConfig.data);
+  const parseAfter = parse(afterConfig.type, afterConfig.data);
+  const arrFromFirstObj = Object.keys(parseBefore);
+  const arrFromSecondObj = Object.keys(parseAfter);
   const difference = {};
   arrFromFirstObj.map((i) => {
-    if (arrFromSecondObj.includes(i) && objFromFirstJson[i] !== objFromSecondJson[i]) {
-      difference[` - ${i}`] = objFromFirstJson[i];
-      difference[` + ${i}`] = objFromSecondJson[i];
-    } if (arrFromSecondObj.includes(i) && objFromFirstJson[i] === objFromSecondJson[i]) {
-      difference[`   ${i}`] = objFromSecondJson[i];
+    if (arrFromSecondObj.includes(i) && parseBefore[i] !== parseAfter[i]) {
+      difference[` - ${i}`] = parseBefore[i];
+      difference[` + ${i}`] = parseAfter[i];
+    } if (arrFromSecondObj.includes(i) && parseBefore[i] === parseAfter[i]) {
+      difference[`   ${i}`] = parseAfter[i];
     } if (!arrFromSecondObj.includes(i)) {
-      difference[` - ${i}`] = objFromFirstJson[i];
+      difference[` - ${i}`] = parseBefore[i];
     }
     return difference;
   });
   arrFromSecondObj.map((i) => {
     if (!arrFromFirstObj.includes(i)) {
-      difference[` + ${i}`] = objFromSecondJson[i];
+      difference[` + ${i}`] = parseAfter[i];
     }
     return difference;
   });
   return JSON.stringify(difference);
 };
+
+export default genDiff;

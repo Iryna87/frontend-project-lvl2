@@ -9,3 +9,5 @@ My second Project
 [![Test Coverage](https://api.codeclimate.com/v1/badges/198c14e32134cba8ea0d/test_coverage)](https://codeclimate.com/github/Iryna87/frontend-project-lvl2/test_coverage)
 
 [![asciicast](https://asciinema.org/a/F5nWiUcWJym4F2dxpiv9mGyI0.svg)](https://asciinema.org/a/F5nWiUcWJym4F2dxpiv9mGyI0)
+
+[![asciicast](https://asciinema.org/a/K52o4Wi0mOqo9blnY5RMlVq6T.svg)](https://asciinema.org/a/K52o4Wi0mOqo9blnY5RMlVq6T)

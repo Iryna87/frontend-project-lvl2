@@ -7,10 +7,23 @@ import genDiff from '../src/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const jsonResult = fs.readFileSync(path.resolve(__dirname, './fixtures/result.json'), 'utf8');
-const before = path.resolve(__dirname, './fixtures/before.json');
-const after = path.resolve(__dirname, './fixtures/after.json');
+const extention = ['json', 'yml'];
 
-test('genDiff', () => {
-  expect(genDiff(before, after)).toBe(jsonResult);
+describe('gendiff', () => {
+  const ymlResult = fs.readFileSync(path.resolve(__dirname, './fixtures/result.yml'), 'utf8');
+  const jsonResult = fs.readFileSync(path.resolve(__dirname, './fixtures/result.json'), 'utf8');
+
+  describe.each(extention)('compare two %s files', (ext) => {
+    const before = path.resolve(__dirname, `./fixtures/before.${ext}`);
+    const after = path.resolve(__dirname, `./fixtures/after.${ext}`);
+    const expected = genDiff(before, after);
+
+    test('yml', () => {
+      expect(expected).toEqual(ymlResult);
+    });
+
+    test('json', () => {
+      expect(genDiff(before, after)).toEqual(jsonResult);
+    });
+  });
 });

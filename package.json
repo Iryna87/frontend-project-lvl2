@@ -26,6 +26,7 @@
   "homepage": "https://github.com/Iryna87/frontend-project-lvl2#readme",
   "dependencies": {
     "@jest/globals": "^26.6.2",
+    "js-yaml": "^3.14.0",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
