@@ -3,9 +3,9 @@ import path from 'path';
 import parse from './parsers.js';
 
 const makeFileData = (pathToFile) => {
-  const data = fs.readFileSync(path.resolve(pathToFile), 'utf-8');
-  const type = path.extname(pathToFile);
-  return { data, type };
+  const content = fs.readFileSync(path.resolve(pathToFile), 'utf-8');
+  const format = path.extname(pathToFile);
+  return { content, format };
 };
 
 const genDiff = (pathToFile1, pathToFile2) => {
