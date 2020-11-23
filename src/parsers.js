@@ -1,11 +1,10 @@
 import yaml from 'js-yaml';
 
-// Выбирается функция-парсер в зависимости от расширения файла
-export default (type, data) => {
+export default (format, content) => {
   let parse;
-  if (type === '.json') {
+  if (format === 'json') {
     parse = JSON.parse(data);
-  } else if (type === '.yml') {
+  } else if (type === 'yml') {
     parse = yaml.safeLoad(data);
   }
   return parse;
