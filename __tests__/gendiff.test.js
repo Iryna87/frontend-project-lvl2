@@ -23,7 +23,7 @@ describe('gendiff', () => {
     });
 
     test('json', () => {
-      expect(genDiff(before, after)).toEqual(jsonResult);
+      expect(expected).toEqual(jsonResult);
     });
   });
 });
