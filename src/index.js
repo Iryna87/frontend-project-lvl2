@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import _ from 'lodash';
 import parse from './parsers.js';
 
 const makeFileData = (pathToFile) => {
@@ -18,27 +19,17 @@ const getData = (pathToFile1, pathToFile2) => {
 
 const genDiff = (pathToFile1, pathToFile2) => {
   const [parseBefore, parseAfter] = getData(pathToFile1, pathToFile2);
-  const arrFromFirstObj = Object.keys(parseBefore);
-  const arrFromSecondObj = Object.keys(parseAfter);
-  const difference = {};
-  arrFromFirstObj.map((i) => {
-    if (arrFromSecondObj.includes(i) && parseBefore[i] !== parseAfter[i]) {
-      difference[` - ${i}`] = parseBefore[i];
-      difference[` + ${i}`] = parseAfter[i];
-    } if (arrFromSecondObj.includes(i) && parseBefore[i] === parseAfter[i]) {
-      difference[`   ${i}`] = parseAfter[i];
-    } if (!arrFromSecondObj.includes(i)) {
-      difference[` - ${i}`] = parseBefore[i];
+  const getHiddenFilesCount = (node) => {
+    console.log(node);
+    console.log(_.isObject(node));
+    if (!_.isObject(node)) {
+      return Object.values(node);
     }
-    return difference;
-  });
-  arrFromSecondObj.map((i) => {
-    if (!arrFromFirstObj.includes(i)) {
-      difference[` + ${i}`] = parseAfter[i];
-    }
-    return difference;
-  });
-  return JSON.stringify(difference);
+    const children = Object.keys(node);
+    console.log(children);
+    return children.map(getHiddenFilesCount);
+  };
+  return getHiddenFilesCount(parseBefore.common);
 };
 
 export default genDiff;
