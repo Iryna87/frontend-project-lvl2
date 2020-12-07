@@ -16,7 +16,7 @@ describe('gendiff', () => {
     const before = path.resolve(__dirname, `./fixtures/before.${ext}`);
     const after = path.resolve(__dirname, `./fixtures/after.${ext}`);
     const expected = genDiff(before, after, 'stylish');
-    
+
     test('json', () => {
       expect(expected).toEqual(jsonResult);
     });
