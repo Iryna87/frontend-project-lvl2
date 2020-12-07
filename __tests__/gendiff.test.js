@@ -18,9 +18,9 @@ describe('gendiff', () => {
     const after = path.resolve(__dirname, `./fixtures/after.${ext}`);
     const expected = genDiff(before, after, 'stylish');
 
-    test('yml', () => {
-      expect(expected).toEqual(ymlResult);
-    });
+    //test('yml', () => {
+      //expect(expected).toEqual(ymlResult);
+    //});
 
     test('json', () => {
       expect(expected).toEqual(jsonResult);
