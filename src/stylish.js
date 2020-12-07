@@ -3,10 +3,10 @@ import _ from 'lodash';
 const getIndent = (depth, spacersCount = 4) => ' '.repeat(depth * spacersCount);
 
 const stringify = (value) => {
-  if (_.isObject(value)) {
-    return JSON.stringify(value).replace(/"/g, '');
+  if (!_.isObject(value)) {
+    return value;
   }
-  return value;
+  return JSON.stringify(value).replace(/"/g, '');
 };
 
 const mapping = {
