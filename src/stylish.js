@@ -1,24 +1,14 @@
-import _ from 'lodash';
+const mapping = {
+  added: (item) => `      + ${item.key}: ${item.value}`,
+  removed: (item) => `      - ${item.key}: ${item.value}`,
+  unchanged: (item) => `        ${item.key}: ${item.value}`,
+  changed: (item) => `      - ${item.key}: ${item.value1} /n      + ${item.key}: ${item.value2}`,
+  nested: (item, stylish) => `    ${item.key}: ${stylish(item.children)}`,
+};
 
 const stylish = (diff) => {
-  const result = {};
-  diff.map((item) => {
-    console.log(item);
-    if (item.status === 'not modified') {
-      result[`    ${item.key}`] = item.value;
-      return result;
-    } if (item.status === 'added') {
-      result[`+   ${item.key}`] = item.value;
-      return result;
-    } if (item.status === 'removed') {
-      result[`-   ${item.key}`] = item.value;
-      return result;
-    } if (_.has(item, 'children')) {
-      const temp = item.children;
-      return stylish(temp);
-    }
-    return null;
-  });
+  const results = diff.map((item) => mapping[item.status](item, stylish));
+  return `{\n${results.join('\n')}\n}`;
 };
 
 export default stylish;
