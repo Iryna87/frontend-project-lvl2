@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
 import parse from './parsers.js';
-import stylish from './stylish.js';
+import formatters from './formatters.js';
 
 const makeFileData = (pathToFile) => {
   const content = fs.readFileSync(path.resolve(pathToFile), 'utf-8');
@@ -18,10 +18,10 @@ const getData = (pathToFile1, pathToFile2) => {
   return [parseBefore, parseAfter];
 };
 
-const genDiff = (pathToFile1, pathToFile2) => {
+const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
   const [obj1, obj2] = getData(pathToFile1, pathToFile2);
-  const compare = (parseBefore, parseAfter, depthForSpaces) => {
-    const children = _.union(_.keys(parseBefore), _.keys(parseAfter));
+  const compare = (parseBefore, parseAfter, depthForSpaces = 1) => {
+    const children = (_.union(_.keys(parseBefore), _.keys(parseAfter))).sort();
     return children.flatMap((child) => {
       if (_.isEqual(parseBefore[child], parseAfter[child])) {
         return {
@@ -36,16 +36,17 @@ const genDiff = (pathToFile1, pathToFile2) => {
           key: child, value: parseBefore[child], status: 'removed', depth: depthForSpaces,
         };
       } if (_.isObject(parseBefore[child]) && _.isObject(parseAfter[child])) {
-        return { key: child, children: compare(parseBefore[child], parseAfter[child], depthForSpaces + 1), status: 'nested' };
+        return {
+          key: child, children: compare(parseBefore[child], parseAfter[child], depthForSpaces + 1), status: 'nested', depth: depthForSpaces,
+        };
       }
       return {
         key: child, value1: parseBefore[child], value2: parseAfter[child], status: 'changed', depth: depthForSpaces,
       };
     });
   };
-  const result = compare(obj1, obj2, 1);
-  console.dir(result, { depth: null });
-  return stylish(result);
+  const result = compare(obj1, obj2);
+  return formatters(result, format);
 };
 
 export default genDiff;

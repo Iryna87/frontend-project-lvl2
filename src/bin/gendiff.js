@@ -13,7 +13,7 @@ program
   .description('Compares two configuration files and shows a difference')
   .option('-f, --format [type]', 'output format: json, plain, tree', 'tree')
   .action((firstConfig, secondConfig) => (
-    console.log(genDiff(firstConfig, secondConfig))));
+    console.log(genDiff(firstConfig, secondConfig, 'stylish'))));
 
 // must be before .parse()
 program.on('--help', () => {

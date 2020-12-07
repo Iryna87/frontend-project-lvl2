@@ -16,7 +16,7 @@ describe('gendiff', () => {
   describe.each(extention)('compare two %s files', (ext) => {
     const before = path.resolve(__dirname, `./fixtures/before.${ext}`);
     const after = path.resolve(__dirname, `./fixtures/after.${ext}`);
-    const expected = genDiff(before, after, format);
+    const expected = genDiff(before, after, 'stylish');
 
     test('yml', () => {
       expect(expected).toEqual(ymlResult);
