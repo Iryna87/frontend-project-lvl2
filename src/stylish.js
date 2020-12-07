@@ -18,7 +18,7 @@ const mapping = {
 };
 
 const stylish = (diff) => {
-  const results = diff.map((item) => mapping[item.status](item, stylish, getIndent));
+  const results = diff.map((item) => mapping[item.status](item, stylish));
   return `{\n${results.join('\n')}\n}`;
 };
 
