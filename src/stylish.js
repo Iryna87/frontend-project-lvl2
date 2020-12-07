@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const getIndent = (depth, spacersCount = 4) => ' '.repeat(depth * spacersCount);
 
-const returnFullValue = (value) => {
+const stringify = (value) => {
   if (_.isObject(value)) {
     return JSON.stringify(value).replace(/"/g, '');
   }
@@ -10,10 +10,10 @@ const returnFullValue = (value) => {
 };
 
 const mapping = {
-  added: (item) => `${getIndent(item.depth)}+ ${item.key}: ${returnFullValue(item.value)}`,
-  removed: (item) => `${getIndent(item.depth)}- ${item.key}: ${returnFullValue(item.value)}`,
-  unchanged: (item) => `  ${getIndent(item.depth)}${item.key}: ${returnFullValue(item.value)}`,
-  changed: (item) => `${getIndent(item.depth)}- ${item.key}: ${returnFullValue(item.value1)}\n${getIndent(item.depth)}+ ${item.key}: ${returnFullValue(item.value2)}`,
+  added: (item) => `${getIndent(item.depth)}+ ${item.key}: ${stringify(item.value)}`,
+  removed: (item) => `${getIndent(item.depth)}- ${item.key}: ${stringify(item.value)}`,
+  unchanged: (item) => `  ${getIndent(item.depth)}${item.key}: ${stringify(item.value)}`,
+  changed: (item) => `${getIndent(item.depth)}- ${item.key}: ${stringify(item.value1)}\n${getIndent(item.depth)}+ ${item.key}: ${stringify(item.value2)}`,
   nested: (item, stylish) => `  ${getIndent(item.depth)}${item.key}: ${stylish(item.children)}${getIndent(item.depth)}`,
 };
 
