@@ -20,30 +20,31 @@ const getData = (pathToFile1, pathToFile2) => {
 
 const genDiff = (pathToFile1, pathToFile2) => {
   const [obj1, obj2] = getData(pathToFile1, pathToFile2);
-  const compare = (parseBefore, parseAfter, depth) => {
+  const compare = (parseBefore, parseAfter, depthForSpaces) => {
     const children = _.union(_.keys(parseBefore), _.keys(parseAfter));
     return children.flatMap((child) => {
       if (_.isEqual(parseBefore[child], parseAfter[child])) {
         return {
-          key: child, value: parseBefore[child], status: 'unchanged', depth: 1,
+          key: child, value: parseBefore[child], status: 'unchanged', depth: depthForSpaces,
         };
       } if (!_.has(parseBefore, child)) {
         return {
-          key: child, value: parseAfter[child], status: 'added', depth: 1,
+          key: child, value: parseAfter[child], status: 'added', depth: depthForSpaces,
         };
       } if (!_.has(parseAfter, child)) {
         return {
-          key: child, value: parseBefore[child], status: 'removed', depth: 1,
+          key: child, value: parseBefore[child], status: 'removed', depth: depthForSpaces,
         };
       } if (_.isObject(parseBefore[child]) && _.isObject(parseAfter[child])) {
-        return { key: child, children: compare(parseBefore[child], parseAfter[child], depth + 1), status: 'nested' };
+        return { key: child, children: compare(parseBefore[child], parseAfter[child], depthForSpaces + 1), status: 'nested' };
       }
       return {
-        key: child, value1: parseBefore[child], value2: parseAfter[child], status: 'changed', depth: 1,
+        key: child, value1: parseBefore[child], value2: parseAfter[child], status: 'changed', depth: depthForSpaces,
       };
     });
   };
   const result = compare(obj1, obj2, 1);
+  console.dir(result, { depth: null });
   return stylish(result);
 };
 
