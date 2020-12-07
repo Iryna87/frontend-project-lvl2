@@ -46,6 +46,7 @@ const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
     });
   };
   const result = compare(obj1, obj2);
+  console.dir(result, { depth: null });
   return formatters(result, format);
 };
 
