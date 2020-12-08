@@ -24,11 +24,8 @@ const stylish = (diff) => {
     const results = items.map((item) => {
       if (item.status === 'nested') {
         const children = [item.children];
-        const answers = children.map((child) => {
-          console.log(child);
-          mapping.unchanged(child);
-        });
-        return `{\n${answers.join('\n')}\n${getIndent(depth + 0.5)}}`;
+        const answers = children.map((child) => `${item.key}: ${iter(child)}\n${getIndent(depth + 0.5)}}`);
+        return ` ${getIndent(item.depth)} ${answers}`;
       }
       return mapping[item.status](item);
     });
