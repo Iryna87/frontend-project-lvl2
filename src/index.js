@@ -20,7 +20,7 @@ const getData = (pathToFile1, pathToFile2) => {
 
 const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
   const [obj1, obj2] = getData(pathToFile1, pathToFile2);
-  const compare = (parseBefore, parseAfter, depthForSpaces = 0.5) => {
+  const compare = (parseBefore, parseAfter, depthForSpaces = 1) => {
     const children = (_.union(_.keys(parseBefore), _.keys(parseAfter))).sort();
     return children.flatMap((child) => {
       if (_.isEqual(parseBefore[child], parseAfter[child])) {
@@ -37,7 +37,7 @@ const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
         };
       } if (_.isObject(parseBefore[child]) && _.isObject(parseAfter[child])) {
         return {
-          key: child, children: compare(parseBefore[child], parseAfter[child], depthForSpaces + 1), status: 'nested', depth: depthForSpaces,
+          key: child, children: compare(parseBefore[child], parseAfter[child], depthForSpaces + 2), status: 'nested', depth: depthForSpaces,
         };
       }
       return {
@@ -46,6 +46,7 @@ const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
     });
   };
   const result = compare(obj1, obj2);
+  console.dir(result, { depth: null });
   return formatters(result, format);
 };
 
