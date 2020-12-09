@@ -21,7 +21,7 @@ const mapping = {
 
 const stylish = (diff) => {
   const results = diff.map((item) => mapping[item.status](item, stylish));
-  return `{\n${results.join('\n')}\n};`;
+  return `{\n${results.join('\n')}\n}`;
 };
 
 export default stylish;
