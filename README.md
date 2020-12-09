@@ -8,7 +8,7 @@ My second Project
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/198c14e32134cba8ea0d/test_coverage)](https://codeclimate.com/github/Iryna87/frontend-project-lvl2/test_coverage)
 
-[![asciicast](https://asciinema.org/a/Pq42HF6eSBSdKjJFS3QK6mVR4.svg)](https://asciinema.org/a/Pq42HF6eSBSdKjJFS3QK6mVR4)
+[![asciicast](https://asciinema.org/a/dNNZCbCRpG1Ht37kNpQnYtQO5.svg)](https://asciinema.org/a/dNNZCbCRpG1Ht37kNpQnYtQO5)
 
 [![asciicast](https://asciinema.org/a/F5nWiUcWJym4F2dxpiv9mGyI0.svg)](https://asciinema.org/a/F5nWiUcWJym4F2dxpiv9mGyI0)
 
