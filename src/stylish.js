@@ -16,22 +16,12 @@ const mapping = {
   removed: (item) => `${getIndent(item.depth)}- ${item.key}: ${stringify(item.value, mapping, item.depth)}`,
   unchanged: (item) => `${getIndent(item.depth)}  ${item.key}: ${stringify(item.value, mapping, item.depth)}`,
   changed: (item) => `${getIndent(item.depth)}- ${item.key}: ${stringify(item.value1, mapping, item.depth)}\n${getIndent(item.depth)}+ ${item.key}: ${stringify(item.value2, mapping, item.depth)}`,
-  nested: (item, stylish) => `${getIndent(item.depth)}  ${item.key}: ${stylish(item.children)}`,
+  nested: (item) => `${getIndent(item.depth)}  ${item.key}: {\n${(item.children.map((child) => mapping[child.status](child)).join('\n'))}\n${getIndent(item.depth + 0.5)}}`,
 };
 
 const stylish = (diff) => {
-  const iter = (items, depth) => {
-    const results = items.map((item) => {
-      if (item.status === 'nested') {
-        const children = [item.children];
-        const answers = children.map((child) => `${item.key}: ${iter(child)}\n${getIndent(depth + 0.5)}}`);
-        return ` ${getIndent(item.depth)} ${answers}`;
-      }
-      return mapping[item.status](item);
-    });
-    return `{\n${results.join('\n')}\n}`;
-  };
-  return iter(diff, 1);
+  const results = diff.map((item) => mapping[item.status](item, stylish));
+  return `{\n${results.join('\n')}\n}`;
 };
 
 export default stylish;
