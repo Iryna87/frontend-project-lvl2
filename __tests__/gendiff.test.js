@@ -10,20 +10,23 @@ const __dirname = path.dirname(__filename);
 const extention = ['json', 'yml'];
 
 describe('gendiff', () => {
-  const ymlResult = fs.readFileSync(path.resolve(__dirname, './fixtures/result_stylish.diff'), 'utf8');
-  const jsonResult = fs.readFileSync(path.resolve(__dirname, './fixtures/result_stylish.diff'), 'utf8');
+  const resultStylish = fs.readFileSync(path.resolve(__dirname, './fixtures/result_stylish.diff'), 'utf8');
+  const resultPlain = fs.readFileSync(path.resolve(__dirname, './fixtures/result_plain.diff'), 'utf8');
 
   describe.each(extention)('compare two %s files', (ext) => {
     const before = path.resolve(__dirname, `./fixtures/before.${ext}`);
     const after = path.resolve(__dirname, `./fixtures/after.${ext}`);
-    const expected = genDiff(before, after, 'stylish');
+    const expected1 = genDiff(before, after, 'stylish');
+    const expected2 = genDiff(before, after, 'plain');
 
     test('yml', () => {
-      expect(expected).toEqual(ymlResult);
+      expect(expected1).toEqual(resultStylish);
+      expect(expected2).toEqual(resultPlain);
     });
 
     test('json', () => {
-      expect(expected).toEqual(jsonResult);
+      expect(expected1).toEqual(resultStylish);
+      expect(expected2).toEqual(resultPlain);
     });
   });
 });

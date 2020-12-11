@@ -23,7 +23,7 @@ const mapping = {
 };
 
 const stylish = (diff) => {
-  const results = diff.map((item) => mapping[item.status](item, stylish));
+  const results = diff.map((item) => mapping[item.status](item));
   return `{\n${results.join('\n')}\n}`;
 };
 

@@ -11,9 +11,11 @@ program
   .version('0.0.1')
   .arguments('<cmd> [env]')
   .description('Compares two configuration files and shows a difference')
-  .option('-f, --format [type]', 'output format: json, plain, tree', 'tree')
-  .action((firstConfig, secondConfig) => (
-    console.log(genDiff(firstConfig, secondConfig, 'stylish'))));
+  .option('-f, --format [type]', 'output format: stylish, plain', 'stylish')
+  .action((filepath1, filepath2, formatName) => {
+    const diff = genDiff(filepath1, filepath2, formatName);
+    console.log(diff);
+  });
 
 // must be before .parse()
 program.on('--help', () => {
