@@ -16,15 +16,15 @@ describe('gendiff', () => {
   describe.each(extention)('compare two %s files', (ext) => {
     const before = path.resolve(__dirname, `./fixtures/before.${ext}`);
     const after = path.resolve(__dirname, `./fixtures/after.${ext}`);
-    const expected1 = genDiff(before, after, 'stylish');
+    const expected1 = genDiff(before, after);
     const expected2 = genDiff(before, after, 'plain');
 
-    test('yml', () => {
+    test('json', () => {
       expect(expected1).toEqual(resultStylish);
       expect(expected2).toEqual(resultPlain);
     });
 
-    test('json', () => {
+    test('yml', () => {
       expect(expected1).toEqual(resultStylish);
       expect(expected2).toEqual(resultPlain);
     });

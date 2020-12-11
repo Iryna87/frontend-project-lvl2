@@ -11,9 +11,9 @@ program
   .version('0.0.1')
   .arguments('<cmd> [env]')
   .description('Compares two configuration files and shows a difference')
-  .option('-f, --format [type]', 'output format: stylish, plain', 'stylish')
-  .action((filepath1, filepath2, formatName) => {
-    const diff = genDiff(filepath1, filepath2, formatName);
+  .option('-f, --format [type]', 'output format: stylish, plain')
+  .action((filepath1, filepath2) => {
+    const diff = genDiff(filepath1, filepath2, program.format);
     console.log(diff);
   });
 
