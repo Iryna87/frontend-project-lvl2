@@ -15,6 +15,7 @@ const mapping = {
   unchanged: () => '',
   changed: (item) => `Property '${item.key}' was updated. From ${checkIfValueIsObject(item.value1)} to ${checkIfValueIsObject(item.value2)}`,
   nested: (item) => `${((item.children.map((child) => {
+    // eslint-disable-next-line no-param-reassign
     child.key = `${item.key}.${child.key}`;
     const result = `${mapping[child.status](child)}`;
     return result;
