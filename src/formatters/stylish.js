@@ -22,9 +22,9 @@ const mapping = {
   }).join('\n'))}\n${getIndent(item.depth + 1)}}`,
 };
 
-const stylish = (diff) => {
+const makeStylish = (diff) => {
   const results = diff.map((item) => mapping[item.status](item));
   return `{\n${results.join('\n')}\n}`;
 };
 
-export default stylish;
+export default makeStylish;

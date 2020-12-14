@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import pkg from 'commander';
-import genDiff from '../index.js';
+import genDiff from '../src/index.js';
 
 const { Command } = pkg;
 const program = new Command();
@@ -17,7 +16,6 @@ program
     console.log(diff);
   });
 
-// must be before .parse()
 program.on('--help', () => {
   console.log('');
   console.log('Example call:');

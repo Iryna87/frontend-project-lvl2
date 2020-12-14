@@ -1,13 +1,15 @@
-import formatStylish from './stylish.js';
-import formatPlain from './plain.js';
+import makeStylish from './stylish.js';
+import makePlain from './plain.js';
+import makeJson from './json.js';
 
 const formatters = {
-  stylish: formatStylish,
-  plain: formatPlain,
+  stylish: makeStylish,
+  plain: makePlain,
+  json: makeJson,
 };
 
 export default (ast, type = 'stylish') => {
-  if (type !== 'plain' && type !== 'stylish') {
+  if (type !== 'plain' && type !== 'json' && type !== 'stylish') {
     throw new Error('The format is not supported!');
   }
   const format = formatters[type];

@@ -20,9 +20,9 @@ const mapping = {
   })).join('\n'))}`,
 };
 
-const plain = (diff) => {
+const makePlain = (diff) => {
   const results = diff.map((item) => mapping[item.status](item, item.key));
   return `${results.join('\n')}`;
 };
 
-export default plain;
+export default makePlain;
