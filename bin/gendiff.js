@@ -10,7 +10,7 @@ program
   .version('0.0.1')
   .arguments('<cmd> [env]')
   .description('Compares two configuration files and shows a difference')
-  .option('-f, --format [type]', 'output format: stylish, plain, json', 'json')
+  .option('-f, --format [type]', 'output format: stylish, plain, json', 'stylish')
   .action((filepath1, filepath2) => {
     const diff = genDiff(filepath1, filepath2, program.format);
     console.log(diff);
