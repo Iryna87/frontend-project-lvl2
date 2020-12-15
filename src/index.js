@@ -21,7 +21,7 @@ const getData = (pathToFile1, pathToFile2) => {
 const genDiff = (pathToFile1, pathToFile2, format) => {
   const [obj1, obj2] = getData(pathToFile1, pathToFile2);
   const compare = (parseBefore, parseAfter, depthForSpaces = 1) => {
-    const children = (_.union(_.keys(parseBefore), _.keys(parseAfter))).sort();
+    const children = _.sortBy(_.union(_.keys(parseBefore), _.keys(parseAfter)));
     return children.flatMap((child) => {
       if (_.isEqual(parseBefore[child], parseAfter[child])) {
         return {
