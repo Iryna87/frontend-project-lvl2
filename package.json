@@ -1,5 +1,5 @@
 {
-  "name": "exit",
+  "name": "@hexlet/code",
   "main": "src/index.js",
   "version": "1.0.0",
   "description": "My second front-end project.",
