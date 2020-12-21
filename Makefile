@@ -4,13 +4,13 @@ install-deps:
 	npm ci
 
 test:
-	npx -n --experimental-vm-modules jest --watch      //npm test
+	npm test
 
 test-coverage:
 	npm test -- --coverage --coverageProvider=v8
 
 gendiff:
-	node bin/gendiff.js -h
+	node bin/
 
 lint:
 	npx eslint .
