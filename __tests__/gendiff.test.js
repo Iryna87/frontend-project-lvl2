@@ -14,20 +14,17 @@ describe('gendiff', () => {
   describe.each(extention)('compare two %s files', (ext) => {
     const before = path.resolve(__dirname, `./fixtures/before.${ext}`);
     const after = path.resolve(__dirname, `./fixtures/after.${ext}`);
-    const resultStylish = checkResult('result_stylish');
-    const resultPlain = checkResult('result_plain');
-    const resultJson = checkResult('result_json');
 
     test('stylish', () => {
-      expect(genDiff(before, after)).toEqual(resultStylish);
+      expect(genDiff(before, after)).toEqual(checkResult('result_stylish'));
     });
 
     test('plain', () => {
-      expect(genDiff(before, after, 'plain')).toEqual(resultPlain);
+      expect(genDiff(before, after, 'plain')).toEqual(checkResult('result_plain'));
     });
 
     test('json', () => {
-      expect(genDiff(before, after, 'json')).toEqual(resultJson);
+      expect(genDiff(before, after, 'json')).toEqual(checkResult('result_json'));
     });
   });
 });
