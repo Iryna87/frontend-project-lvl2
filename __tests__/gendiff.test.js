@@ -8,6 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const extentions = ['json', 'yml'];
+
 const getFixturedPath = (pathName) => path.resolve(__dirname, 'fixtures', pathName);
 const readFileContent = (fileName) => fs.readFileSync(getFixturedPath(fileName), 'utf-8');
 
