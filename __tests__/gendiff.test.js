@@ -9,11 +9,12 @@ const __dirname = path.dirname(__filename);
 
 const extentions = ['json', 'yml'];
 const getResult = (resultName) => fs.readFileSync(path.resolve(__dirname, 'fixtures', `${resultName}.diff`), 'utf8');
+const getFileContent = (fileName, ext) => path.resolve(__dirname, 'fixtures', `${fileName}.${ext}`);
 
 describe('gendiff', () => {
   describe.each(extentions)('compare two %s files', (ext) => {
-    const firstFile = path.resolve(__dirname, 'fixtures', `before.${ext}`);
-    const secondFile = path.resolve(__dirname, 'fixtures', `after.${ext}`);
+    const firstFile = getFileContent('before', ext);
+    const secondFile = getFileContent('after', ext);
 
     test('stylish', () => {
       expect(genDiff(firstFile, secondFile)).toEqual(getResult('resultStylish'));
