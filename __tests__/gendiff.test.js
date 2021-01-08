@@ -8,17 +8,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const extentions = ['json', 'yml'];
+const getFixturedPath = (pathName) => path.resolve(__dirname, 'fixtures', pathName);
+const readFileContent = (fileName) => fs.readFileSync(getFixturedPath(fileName), 'utf-8');
 
-const getFixturePath = (pathName) => fs.readFileSync(path.resolve(__dirname, 'fixtures', pathName, 'utf8'));
-const getFileContent = (fileName, ext) => getFixturePath(`${fileName}.${ext}`);
+const resultStylish = readFileContent('resultStylish.diff');
+const resultPlain = readFileContent('resultPlain.diff');
+const resultJson = readFileContent('resultJson.diff');
 
 describe('gendiff', () => {
   describe.each(extentions)('compare two %s files', (ext) => {
-    const firstFile = getFileContent('before', ext);
-    const secondFile = getFileContent('after', ext);
-    const resultStylish = getFileContent('resultStylish', 'diff');
-    const resultPlain = getFileContent('resultPlain', 'diff');
-    const resultJson = getFileContent('resultJson', 'diff');
+    const firstFile = getFixturedPath(`before.${ext}`);
+    const secondFile = getFixturedPath(`after.${ext}`);
 
     test('stylish', () => {
       expect(genDiff(firstFile, secondFile)).toEqual(resultStylish);
