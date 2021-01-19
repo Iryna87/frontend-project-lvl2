@@ -10,11 +10,11 @@ const __dirname = path.dirname(__filename);
 const extentions = ['json', 'yml'];
 
 const getFixturedPath = (pathName) => path.resolve(__dirname, 'fixtures', pathName);
-const readFileContent = (fileName) => fs.readFileSync(getFixturedPath(fileName), 'utf-8');
+const readFixuredContent = (fileName) => fs.readFileSync(getFixturedPath(fileName), 'utf-8');
 
-const resultStylish = readFileContent('resultStylish.diff');
-const resultPlain = readFileContent('resultPlain.diff');
-const resultJson = readFileContent('resultJson.diff');
+const resultStylish = readFixuredContent('resultStylish.diff');
+const resultPlain = readFixuredContent('resultPlain.diff');
+const resultJson = readFixuredContent('resultJson.diff');
 
 describe('gendiff', () => {
   describe.each(extentions)('compare two %s files', (ext) => {

@@ -8,7 +8,7 @@ const formatters = {
   json: makeJson,
 };
 
-export default (ast, type = 'stylish') => {
+export default (ast, type) => {
   if (type !== 'plain' && type !== 'json' && type !== 'stylish') {
     throw new Error('The format is not supported!');
   }

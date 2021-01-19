@@ -7,19 +7,10 @@ const { Command } = pkg;
 const program = new Command();
 
 program
-  .version('0.0.1')
+  .version('1.0.0')
   .arguments('<cmd> [env]')
   .description('Compares two configuration files and shows a difference')
   .option('-f, --format [type]', 'output format: stylish, plain, json', 'stylish')
-  .action((filepath1, filepath2) => {
-    const diff = genDiff(filepath1, filepath2, program.format);
-    console.log(diff);
-  });
-
-program.on('--help', () => {
-  console.log('');
-  console.log('Example call:');
-  console.log('  $ custom-help --help');
-});
-
-program.parse(process.argv);
+  .action((filepath1, filepath2) => (
+    console.log(genDiff(filepath1, filepath2, program.format))))
+  .parse(process.argv);
