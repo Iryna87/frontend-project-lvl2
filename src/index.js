@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import buildDifference from './ast.js';
-import parse from './parsers.js';
+import buildAst from './ast.js';
+import parseData from './parsers.js';
 import formatResult from './formatters/index.js';
 
 const getFileData = (pathToFile) => {
@@ -12,14 +12,14 @@ const getFileData = (pathToFile) => {
 
 const getParsedData = (pathToFile) => {
   const fileData = getFileData(pathToFile);
-  const parsedData = parse(fileData.dataFormat, fileData.dataContent);
+  const parsedData = parseData(fileData.dataFormat, fileData.dataContent);
   return parsedData;
 };
 
 const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
   const firstDataToCompare = getParsedData(pathToFile1);
   const secondDataToCompare = getParsedData(pathToFile2);
-  const result = buildDifference(firstDataToCompare, secondDataToCompare);
+  const result = buildAst(firstDataToCompare, secondDataToCompare);
   return formatResult(result, format);
 };
 

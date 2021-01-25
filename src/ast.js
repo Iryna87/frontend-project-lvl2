@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
-const buildDifference = (firstObj, secondObj) => {
+const buildAst = (firstObj, secondObj) => {
   const children = _.sortBy(_.union(_.keys(firstObj), _.keys(secondObj)));
   return children.flatMap((child) => {
     if (_.isObject(firstObj[child]) && _.isObject(secondObj[child])) {
       return {
-        key: child, children: buildDifference(firstObj[child], secondObj[child]), status: 'nested',
+        key: child, children: buildAst(firstObj[child], secondObj[child]), status: 'nested',
       };
     } if (_.has(firstObj, child) && _.has(secondObj, child)
       && firstObj[child] !== secondObj[child]) {
@@ -27,4 +27,4 @@ const buildDifference = (firstObj, secondObj) => {
   });
 };
 
-export default buildDifference;
+export default buildAst;
