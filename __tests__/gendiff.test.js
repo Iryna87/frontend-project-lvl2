@@ -18,19 +18,19 @@ const resultJson = readFixuredContent('resultJson.diff');
 
 describe('gendiff', () => {
   describe.each(extentions)('compare two %s files', (ext) => {
-    const firstFile = getFixturedPath(`before.${ext}`);
-    const secondFile = getFixturedPath(`after.${ext}`);
+    const fixuredPath1 = getFixturedPath(`first.${ext}`);
+    const fixuredPath2 = getFixturedPath(`second.${ext}`);
 
     test('stylish', () => {
-      expect(genDiff(firstFile, secondFile)).toEqual(resultStylish);
+      expect(genDiff(fixuredPath1, fixuredPath2)).toEqual(resultStylish);
     });
 
     test('plain', () => {
-      expect(genDiff(firstFile, secondFile, 'plain')).toEqual(resultPlain);
+      expect(genDiff(fixuredPath1, fixuredPath2, 'plain')).toEqual(resultPlain);
     });
 
     test('json', () => {
-      expect(genDiff(firstFile, secondFile, 'json')).toEqual(resultJson);
+      expect(genDiff(fixuredPath1, fixuredPath2, 'json')).toEqual(resultJson);
     });
   });
 });
