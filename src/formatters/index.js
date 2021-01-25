@@ -12,6 +12,5 @@ export default (ast, type = 'stylish') => {
   if (type !== 'plain' && type !== 'json' && type !== 'stylish') {
     throw new Error('The format is not supported!');
   }
-  const format = formatters[type];
-  return format(ast);
+  return formatters[type](ast);
 };

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const checkIfValueIsObject = (item) => {
+const isObject = (item) => {
   if (!_.isObject(item) && typeof item === 'string') {
     return `'${item}'`;
   } if (!_.isObject(item) && typeof item !== 'string') {
@@ -10,10 +10,10 @@ const checkIfValueIsObject = (item) => {
 };
 
 const mapping = {
-  added: (item, name) => `Property '${name}' was added with value: ${checkIfValueIsObject(item.value)}`,
+  added: (item, name) => `Property '${name}' was added with value: ${isObject(item.value)}`,
   removed: (item, name) => `Property '${name}' was removed`,
   unchanged: () => '',
-  changed: (item, name) => `Property '${name}' was updated. From ${checkIfValueIsObject(item.value1)} to ${checkIfValueIsObject(item.value2)}`,
+  changed: (item, name) => `Property '${name}' was updated. From ${isObject(item.value1)} to ${isObject(item.value2)}`,
   nested: (item, currentPath) => `${(_.compact(item.children.map((child) => {
     const result = `${mapping[child.status](child, `${currentPath}.${child.key}`)}`;
     return result;
