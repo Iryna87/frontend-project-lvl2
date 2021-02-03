@@ -20,6 +20,7 @@ const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
   const firstDataToCompare = getParsedData(pathToFile1);
   const secondDataToCompare = getParsedData(pathToFile2);
   const result = buildAst(firstDataToCompare, secondDataToCompare);
+  console.dir(result, { depth: null });
   return formatResult(result, format);
 };
 

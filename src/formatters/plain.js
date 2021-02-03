@@ -15,13 +15,13 @@ const mapping = {
   unchanged: () => '',
   changed: (item, name) => `Property '${name}' was updated. From ${isObject(item.value1)} to ${isObject(item.value2)}`,
   nested: (item, currentPath) => `${(_.compact(item.children.map((child) => {
-    const result = `${mapping[child.status](child, `${currentPath}.${child.key}`)}`;
+    const result = `${mapping[child.type](child, `${currentPath}.${child.key}`)}`;
     return result;
   })).join('\n'))}`,
 };
 
 const makePlain = (diff) => {
-  const results = diff.map((item) => mapping[item.status](item, item.key));
+  const results = diff.map((item) => mapping[item.type](item, item.key));
   return `${results.join('\n')}`;
 };
 
