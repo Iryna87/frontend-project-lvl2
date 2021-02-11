@@ -15,11 +15,12 @@ const mapping = {
   added: (item, depth) => `${getIndent(depth)}+ ${item.key}: ${stringify(item.value, mapping, depth)}`,
   removed: (item, depth) => `${getIndent(depth)}- ${item.key}: ${stringify(item.value, mapping, depth)}`,
   unchanged: (item, depth) => `${getIndent(depth)}  ${item.key}: ${stringify(item.value, mapping, depth)}`,
-  changed: (item, depth) => `${getIndent(depth)}- ${item.key}: ${stringify(item.value1, mapping, depth)}\n${getIndent(depth)}+ ${item.key}: ${stringify(item.value2, mapping, depth)}`,
-  nested: (item, depth) => `${getIndent(depth)}  ${item.key}: {\n${(item.children.map((child) => {
-    const result = mapping[child.type](child, depth + 2);
-    return result;
-  }).join('\n'))}\n${getIndent(depth + 1)}}`,
+  changed: (item, depth) => [`${getIndent(depth)}- ${item.key}: ${stringify(item.value1, mapping, depth)}`,
+    `${getIndent(depth)}+ ${item.key}: ${stringify(item.value2, mapping, depth)}`].join('\n'),
+  nested: (item, depth) => {
+    const result = item.children.map((child) => mapping[child.type](child, depth + 2));
+    return `${getIndent(depth)}  ${item.key}: {\n${result.join('\n')}\n  ${getIndent(depth)}}`;
+  },
 };
 
 const makeStylish = (diff) => {

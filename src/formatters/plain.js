@@ -1,23 +1,24 @@
 import _ from 'lodash';
 
-const isObject = (item) => {
-  if (!_.isObject(item) && typeof item === 'string') {
+const stringify = (item) => {
+  if (_.isObject(item)) {
+    return '[complex value]';
+  } if (typeof item === 'string') {
     return `'${item}'`;
-  } if (!_.isObject(item) && typeof item !== 'string') {
-    return item;
   }
-  return '[complex value]';
+  return item;
 };
 
 const mapping = {
-  added: (item, name) => `Property '${name}' was added with value: ${isObject(item.value)}`,
+  added: (item, name) => `Property '${name}' was added with value: ${stringify(item.value)}`,
   removed: (item, name) => `Property '${name}' was removed`,
   unchanged: () => '',
-  changed: (item, name) => `Property '${name}' was updated. From ${isObject(item.value1)} to ${isObject(item.value2)}`,
-  nested: (item, currentPath) => `${(_.compact(item.children.map((child) => {
-    const result = `${mapping[child.type](child, `${currentPath}.${child.key}`)}`;
-    return result;
-  })).join('\n'))}`,
+  changed: (item, name) => `Property '${name}' was updated. From ${stringify(item.value1)} to ${stringify(item.value2)}`,
+  nested: (item, currentPath) => {
+    const generatePath = (path, key) => `${path}.${key}`;
+    const result = item.children.map((child) => `${mapping[child.type](child, generatePath(currentPath, child.key))}`);
+    return `${_.compact(result).join('\n')}`;
+  },
 };
 
 const makePlain = (diff) => {
