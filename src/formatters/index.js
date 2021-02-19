@@ -9,8 +9,8 @@ const formatters = {
 };
 
 export default (ast, type = 'stylish') => {
-  if (type !== 'plain' && type !== 'json' && type !== 'stylish') {
-    throw new Error('The format is not supported!');
+  if (!formatters[type]) {
+    throw new Error(`The format '${type}' is not supported!`);
   }
   return formatters[type](ast);
 };
