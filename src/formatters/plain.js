@@ -8,25 +8,21 @@ const stringify = (item) => {
   }
   return item;
 };
-const generatePath = (args) => {
-  const flatten = args.flat(Infinity);
-  const result = flatten.flatMap((el) => el.trim());
-  return result.join('.');
-};
+const generatePath = (childPath, parentPath) => [...parentPath, childPath].join('.');
 
 const mapping = {
-  added: (item, ...name) => `Property '${generatePath(name)}' was added with value: ${stringify(item.value)}`,
-  removed: (item, ...name) => `Property '${generatePath(name)}' was removed`,
+  added: (item, path) => `Property '${generatePath(item.key, path)}' was added with value: ${stringify(item.value)}`,
+  removed: (item, path) => `Property '${generatePath(item.key, path)}' was removed`,
   unchanged: () => '',
-  changed: (item, ...name) => `Property '${generatePath(name)}' was updated. From ${stringify(item.value1)} to ${stringify(item.value2)}`,
-  nested: (item, ...name) => {
-    const result = item.children.map((child) => `${mapping[child.type](child, name, child.key)}`);
+  changed: (item, path) => `Property '${generatePath(item.key, path)}' was updated. From ${stringify(item.value1)} to ${stringify(item.value2)}`,
+  nested: (item, path) => {
+    const result = item.children.map((child) => `${mapping[child.type](child, [...path, item.key])}`);
     return `${_.compact(result).join('\n')}`;
   },
 };
 
 const makePlain = (diff) => {
-  const results = diff.map((item) => mapping[item.type](item, item.key));
+  const results = diff.map((item) => mapping[item.type](item, []));
   return `${results.join('\n')}`;
 };
 
